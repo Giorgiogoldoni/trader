@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🦅 RAPTOR Docs · Master Suite</title>
+<style>
+:root {
+  --bg: #f4f6f9;
+  --sb: #0d1526;
+  --card: #ffffff;
+  --border: #dde3ec;
+  --accent: #e07b00;
+  --blue: #1a6fcf;
+  --text: #1a2332;
+  --muted: #6b7c93;
+  --green: #16a34a;
+  --red: #dc2626;
+  --purple: #7c3aed;
+  --shadow: 0 1px 4px rgba(0,0,0,.07);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { scroll-behavior:smooth; }
+body { font-family:'Segoe UI',system-ui,sans-serif; background:var(--bg); color:var(--text); display:flex; min-height:100vh; }
+
+/* SIDEBAR */
+#sidebar {
+  width:220px; min-width:220px; background:var(--sb);
+  position:fixed; top:0; left:0; height:100vh;
+  display:flex; flex-direction:column; overflow:hidden; z-index:100;
+  border-right:1px solid #1a2e4a;
+}
+.sb-logo {
+  padding:16px 14px 13px; border-bottom:1px solid #1a2e4a;
+  display:flex; align-items:center; gap:10px; flex-shrink:0;
+}
+.sb-logo-icon {
+  width:32px; height:32px; background:linear-gradient(135deg,#132040,#0a1628);
+  border:1px solid #1a2e4a; border-radius:7px;
+  display:flex; align-items:center; justify-content:center; font-size:16px;
+}
+.sb-logo-text strong { display:block; font-size:12px; letter-spacing:1px; color:#fff; }
+.sb-logo-text span { font-size:8px; color:#3a5a7a; letter-spacing:1.5px; }
+.sb-nav { flex:1; padding:8px 6px; overflow-y:auto; }
+.sb-nav::-webkit-scrollbar { width:2px; }
+.sb-nav::-webkit-scrollbar-thumb { background:#1a2e4a; }
+.sb-section { font-size:7px; letter-spacing:1.5px; color:#3a5a7a; padding:10px 8px 4px; text-transform:uppercase; font-weight:700; }
+.sb-link {
+  display:flex; align-items:center; gap:7px; padding:7px 10px;
+  border-radius:5px; cursor:pointer; font-size:11px; color:#5a7a9a;
+  transition:.12s; margin-bottom:1px; text-decoration:none; white-space:nowrap;
+}
+.sb-link:hover { background:rgba(255,255,255,.06); color:#dce8f5; }
+.sb-link.active { background:rgba(26,111,207,.22); color:#fff; font-weight:600; }
+.sb-icon { font-size:12px; width:16px; text-align:center; }
+.sb-version {
+  padding:10px 14px; border-top:1px solid #1a2e4a;
+  font-size:9px; color:#3a5a7a; letter-spacing:.5px;
+}
+
+/* MAIN */
+#main {
+  margin-left:220px; flex:1; min-height:100vh;
+  padding:36px 44px 60px; max-width:900px;
+}
+
+/* HERO */
+.hero {
+  background:var(--sb); border-radius:12px; padding:28px 32px;
+  margin-bottom:32px; position:relative; overflow:hidden;
+}
+.hero::after {
+  content:'🦅'; position:absolute; right:28px; top:50%;
+  transform:translateY(-50%); font-size:72px; opacity:.08;
+}
+.hero-badge {
+  display:inline-block; font-size:8px; letter-spacing:2px; font-weight:700;
+  color:#3a5a7a; text-transform:uppercase; margin-bottom:8px;
+}
+.hero h1 { font-size:26px; font-weight:700; color:#fff; margin-bottom:6px; }
+.hero p { font-size:11.5px; color:#5a7a9a; line-height:1.7; max-width:520px; }
+.hero-pills { display:flex; gap:8px; margin-top:14px; flex-wrap:wrap; }
+.hero-pill {
+  background:rgba(26,111,207,.18); border:1px solid rgba(26,111,207,.3);
+  border-radius:5px; padding:3px 10px; font-size:9px; color:#7ab4f0;
+  font-weight:600; letter-spacing:.5px;
+}
+
+/* SECTION */
+.doc-section { margin-bottom:40px; scroll-margin-top:24px; }
+.section-header {
+  display:flex; align-items:center; gap:10px;
+  border-bottom:2px solid var(--border); padding-bottom:10px; margin-bottom:18px;
+}
+.section-icon {
+  width:32px; height:32px; border-radius:8px;
+  display:flex; align-items:center; justify-content:center; font-size:15px;
+  flex-shrink:0;
+}
+.section-header h2 { font-size:15px; font-weight:700; color:var(--text); }
+.section-header span { font-size:10px; color:var(--muted); margin-left:4px; }
+
+/* MODULE CARD */
+.mod-card {
+  background:#fff; border:1px solid var(--border); border-radius:9px;
+  padding:16px 18px; margin-bottom:10px; box-shadow:var(--shadow);
+  border-left:3px solid var(--card-accent, var(--blue));
+}
+.mod-card h3 { font-size:13px; font-weight:700; margin-bottom:4px; color:var(--text); }
+.mod-card .mod-sub { font-size:9.5px; color:var(--muted); margin-bottom:10px; letter-spacing:.3px; }
+.mod-card p { font-size:11px; color:#3a4a5a; line-height:1.7; margin-bottom:8px; }
+.tag-row { display:flex; gap:5px; flex-wrap:wrap; }
+.tag {
+  font-size:8.5px; padding:2px 8px; border-radius:4px; font-weight:600;
+  background:#f0f4ff; color:var(--blue); border:1px solid #d6e4ff;
+}
+.tag.green { background:#f0fdf4; color:var(--green); border-color:#bbf7d0; }
+.tag.orange { background:#fff7ed; color:var(--accent); border-color:#fed7aa; }
+.tag.purple { background:#faf5ff; color:var(--purple); border-color:#e9d5ff; }
+
+/* TABLE */
+.doc-table { width:100%; border-collapse:collapse; font-size:11px; margin:10px 0; }
+.doc-table th {
+  background:#f8f9fb; border:1px solid var(--border);
+  padding:7px 12px; text-align:left; font-size:9.5px;
+  letter-spacing:.5px; text-transform:uppercase; color:var(--muted); font-weight:700;
+}
+.doc-table td { border:1px solid var(--border); padding:7px 12px; color:var(--text); vertical-align:top; }
+.doc-table tr:hover td { background:#f8f9fb; }
+
+/* SHORTCUT */
+.shortcut-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(200px,1fr)); gap:8px; }
+.shortcut-item {
+  background:#fff; border:1px solid var(--border); border-radius:7px;
+  padding:10px 12px; display:flex; align-items:center; gap:10px; box-shadow:var(--shadow);
+}
+.kbd {
+  background:var(--sb); color:#7ab4f0; border:1px solid #1a2e4a;
+  border-radius:5px; padding:3px 8px; font-size:10px; font-family:monospace;
+  font-weight:700; flex-shrink:0; white-space:nowrap;
+}
+.shortcut-desc { font-size:10.5px; color:var(--muted); }
+
+/* CHANGELOG */
+.changelog-item {
+  background:#fff; border:1px solid var(--border); border-radius:9px;
+  padding:14px 18px; margin-bottom:8px; box-shadow:var(--shadow);
+  display:flex; gap:14px;
+}
+.cl-version {
+  background:var(--blue); color:#fff; border-radius:5px;
+  padding:2px 9px; font-size:9px; font-weight:700;
+  letter-spacing:.5px; height:fit-content; flex-shrink:0; margin-top:2px;
+}
+.cl-version.orange { background:var(--accent); }
+.cl-version.green { background:var(--green); }
+.cl-date { font-size:9px; color:var(--muted); margin-bottom:4px; }
+.cl-title { font-size:12px; font-weight:700; margin-bottom:4px; color:var(--text); }
+.cl-list { font-size:10.5px; color:#3a4a5a; line-height:1.8; padding-left:14px; }
+
+/* ALERT BOX */
+.alert-box {
+  border-radius:8px; padding:12px 16px; margin:14px 0;
+  font-size:11px; line-height:1.6; display:flex; gap:10px; align-items:flex-start;
+}
+.alert-box.info { background:#eff6ff; border:1px solid #bfdbfe; color:#1e40af; }
+.alert-box.warn { background:#fff7ed; border:1px solid #fed7aa; color:#92400e; }
+.alert-box.ok   { background:#f0fdf4; border:1px solid #bbf7d0; color:#14532d; }
+.alert-icon { font-size:14px; flex-shrink:0; }
+
+/* BACK BTN */
+.back-btn {
+  display:inline-flex; align-items:center; gap:6px;
+  font-size:11px; color:var(--muted); text-decoration:none;
+  padding:5px 12px; border:1px solid var(--border); border-radius:6px;
+  background:#fff; margin-bottom:20px; transition:.12s;
+}
+.back-btn:hover { color:var(--text); background:var(--bg); }
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside id="sidebar">
+  <div class="sb-logo">
+    <div class="sb-logo-icon">🦅</div>
+    <div class="sb-logo-text">
+      <strong>RAPTOR</strong>
+      <span>DOCUMENTAZIONE</span>
+    </div>
+  </div>
+  <nav class="sb-nav">
+    <a class="sb-link active" href="#overview"><span class="sb-icon">🏠</span> Panoramica</a>
+    <div class="sb-section">Suite Fixed</div>
+    <a class="sb-link" href="#one"><span class="sb-icon">🦅</span> RAPTOR One</a>
+    <a class="sb-link" href="#alert"><span class="sb-icon">🔔</span> RAPTOR Alert</a>
+    <a class="sb-link" href="#ranking"><span class="sb-icon">📊</span> RAPTOR Ranking</a>
+    <a class="sb-link" href="#advanced"><span class="sb-icon">📈</span> RAPTOR Advanced</a>
+    <a class="sb-link" href="#advice"><span class="sb-icon">💼</span> RAPTOR Advice</a>
+    <div class="sb-section">Altri Moduli</div>
+    <a class="sb-link" href="#leva"><span class="sb-icon">⚡</span> RAPTOR Leva</a>
+    <a class="sb-link" href="#classic"><span class="sb-icon">🔬</span> RAPTOR Classic</a>
+    <a class="sb-link" href="#wealth"><span class="sb-icon">💰</span> Wealth Meridian</a>
+    <a class="sb-link" href="#stoxx"><span class="sb-icon">🇪🇺</span> STOXX 600</a>
+    <a class="sb-link" href="#geografia"><span class="sb-icon">🌍</span> RAPTOR Geografia</a>
+    <a class="sb-link" href="#scenario"><span class="sb-icon">🎯</span> Scenario Engine</a>
+    <div class="sb-section">Riferimenti</div>
+    <a class="sb-link" href="#shortcuts"><span class="sb-icon">⌨️</span> Shortcut</a>
+    <a class="sb-link" href="#architecture"><span class="sb-icon">🔧</span> Architettura</a>
+    <a class="sb-link" href="#changelog"><span class="sb-icon">📋</span> Changelog</a>
+  </nav>
+  <div class="sb-version">v3.0 · marzo 2025</div>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main id="main">
+
+  <a class="back-btn" href="https://giorgiogoldoni.github.io/raptor_Suite_Master.html/">← Torna alla Suite</a>
+
+  <!-- HERO -->
+  <div class="hero" id="overview">
+    <div class="hero-badge">Documentazione Ufficiale</div>
+    <h1>RAPTOR Master Suite</h1>
+    <p>Rapid Analysis &amp; Portfolio Trading Operations Report — piattaforma integrata per l'analisi tecnica di ETF, gestione portafoglio e simulazione scenari macro. 13 moduli, oltre 700 ETF monitorati, fonti dati Yahoo Finance e Stooq.</p>
+    <div class="hero-pills">
+      <span class="hero-pill">700 ETF</span>
+      <span class="hero-pill">538 ETF Leva</span>
+      <span class="hero-pill">600 Titoli STOXX</span>
+      <span class="hero-pill">Yahoo · Stooq</span>
+      <span class="hero-pill">13 Moduli</span>
+      <span class="hero-pill">v3.0</span>
+    </div>
+  </div>
+
+  <div class="alert-box info">
+    <span class="alert-icon">ℹ️</span>
+    <span>Tutti i moduli girano interamente nel browser — nessun server backend, nessun login. I dati vengono recuperati in tempo reale via proxy CORS da Yahoo Finance e Stooq.</span>
+  </div>
+
+  <!-- RAPTOR ONE -->
+  <div class="doc-section" id="one">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(224,123,0,.1);border:1px solid rgba(224,123,0,.2)">🦅</div>
+      <h2>RAPTOR One <span>Suite Fixed</span></h2>
+    </div>
+    <div class="mod-card" style="--card-accent:#e07b00">
+      <h3>RAPTOR One</h3>
+      <div class="mod-sub">694 ETF · Yahoo Finance + Stooq EU · 8 filtri combinati</div>
+      <p>Modulo principale della suite. Integra in un'unica interfaccia Alert, Ranking e Grafici. Permette di filtrare l'universo ETF secondo 8 parametri tecnici combinati e visualizzare i risultati in forma tabellare e grafica.</p>
+      <div class="tag-row">
+        <span class="tag">Alert live</span>
+        <span class="tag">Ranking Score</span>
+        <span class="tag">8 filtri</span>
+        <span class="tag orange">KAMA</span>
+        <span class="tag orange">AO</span>
+        <span class="tag green">Yahoo + Stooq</span>
+      </div>
+    </div>
+    <table class="doc-table">
+      <tr><th>Funzione</th><th>Descrizione</th></tr>
+      <tr><td>Alert BUY / SELL</td><td>Segnali basati su incrocio KAMA e Awesome Oscillator</td></tr>
+      <tr><td>Score 0–200</td><td>Punteggio composito che combina momentum, trend e volatilità</td></tr>
+      <tr><td>Filtri combinati</td><td>8 criteri selezionabili: KAMA, AO, RSI, Volume, Settore, Area geo, Valuta, Score minimo</td></tr>
+      <tr><td>Grafici integrati</td><td>Candele, Heikin-Ashi, linea prezzi con overlay indicatori</td></tr>
+      <tr><td>Export</td><td>Download lista filtrata in formato Excel (.xlsx)</td></tr>
+    </table>
+  </div>
+
+  <!-- RAPTOR ALERT -->
+  <div class="doc-section" id="alert">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(26,111,207,.08);border:1px solid rgba(26,111,207,.15)">🔔</div>
+      <h2>RAPTOR Alert <span>Suite Fixed</span></h2>
+    </div>
+    <div class="mod-card">
+      <h3>RAPTOR Alert</h3>
+      <div class="mod-sub">700 ETF · Segnali in tempo reale · Tripla chiamata proxy</div>
+      <p>Motore di alert dedicato. Scansiona l'intero universo di 700 ETF e notifica i segnali operativi BUY e SELL. Utilizza un sistema di tripla chiamata con fallback automatico tra proxy CORS per massimizzare la disponibilità dei dati.</p>
+      <div class="tag-row">
+        <span class="tag">BUY / SELL</span>
+        <span class="tag">700 ETF</span>
+        <span class="tag green">Tripla chiamata</span>
+        <span class="tag orange">Export Excel</span>
+      </div>
+    </div>
+    <div class="alert-box warn">
+      <span class="alert-icon">⚠️</span>
+      <span>Il caricamento completo dei 700 ETF richiede 2–4 minuti a seconda della connessione e della disponibilità dei proxy. Il batch size è 5 ETF ogni 600ms.</span>
+    </div>
+  </div>
+
+  <!-- RAPTOR RANKING -->
+  <div class="doc-section" id="ranking">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(26,111,207,.08);border:1px solid rgba(26,111,207,.15)">📊</div>
+      <h2>RAPTOR Ranking <span>Suite Fixed</span></h2>
+    </div>
+    <div class="mod-card">
+      <h3>RAPTOR Ranking</h3>
+      <div class="mod-sub">700 ETF · Score 0–200 · Classificazione live</div>
+      <p>Classifica tutti gli ETF per Score composito. Ogni ETF riceve un punteggio da 0 a 200 basato su indicatori tecnici multipli. La tabella evidenzia automaticamente le soglie operative: STOP, USCITA, ATTENZIONE.</p>
+      <div class="tag-row">
+        <span class="tag">Score 0–200</span>
+        <span class="tag orange">STOP</span>
+        <span class="tag orange">USCITA</span>
+        <span class="tag">ATTENZIONE</span>
+      </div>
+    </div>
+    <table class="doc-table">
+      <tr><th>Soglia</th><th>Significato</th><th>Azione suggerita</th></tr>
+      <tr><td>Score &lt; 60</td><td>Segnale STOP</td><td>Uscita immediata o stop loss</td></tr>
+      <tr><td>Score 60–90</td><td>Zona USCITA</td><td>Valutare riduzione posizione</td></tr>
+      <tr><td>Score 90–120</td><td>ATTENZIONE</td><td>Monitorare attentamente</td></tr>
+      <tr><td>Score &gt; 120</td><td>Zona positiva</td><td>Mantenere / valutare ingresso</td></tr>
+      <tr><td>Score &gt; 160</td><td>Segnale forte</td><td>BUY confermato</td></tr>
+    </table>
+  </div>
+
+  <!-- RAPTOR ADVANCED -->
+  <div class="doc-section" id="advanced">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(26,111,207,.08);border:1px solid rgba(26,111,207,.15)">📈</div>
+      <h2>RAPTOR Advanced <span>Suite Fixed</span></h2>
+    </div>
+    <div class="mod-card">
+      <h3>RAPTOR Advanced</h3>
+      <div class="mod-sub">700 ETF · 6 pannelli grafici · Analisi tecnica completa</div>
+      <p>Modulo di analisi tecnica approfondita con 6 pannelli grafici sovrapposti e affiancati. Include indicatori avanzati e strumenti di position sizing per la gestione del rischio operativo.</p>
+      <div class="tag-row">
+        <span class="tag">Heikin-Ashi</span>
+        <span class="tag orange">KAMA</span>
+        <span class="tag">AO</span>
+        <span class="tag">RSI</span>
+        <span class="tag purple">Position Sizing</span>
+        <span class="tag">6 pannelli</span>
+      </div>
+    </div>
+    <table class="doc-table">
+      <tr><th>Indicatore</th><th>Parametri</th><th>Utilizzo</th></tr>
+      <tr><td>KAMA</td><td>Period 10, Fast 2, Slow 30</td><td>Trend adattivo principale</td></tr>
+      <tr><td>Awesome Oscillator</td><td>EMA 3 / EMA 13 su HL/2</td><td>Conferma momentum</td></tr>
+      <tr><td>RSI</td><td>Period 14</td><td>Ipercomprato / ipervenduto</td></tr>
+      <tr><td>Heikin-Ashi</td><td>—</td><td>Visualizzazione trend smoothed</td></tr>
+      <tr><td>Position Sizing</td><td>% rischio, stop loss</td><td>Calcolo dimensione posizione</td></tr>
+    </table>
+  </div>
+
+  <!-- RAPTOR ADVICE -->
+  <div class="doc-section" id="advice">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(26,111,207,.08);border:1px solid rgba(26,111,207,.15)">💼</div>
+      <h2>RAPTOR Advice <span>Suite Fixed</span></h2>
+    </div>
+    <div class="mod-card">
+      <h3>RAPTOR Advice</h3>
+      <div class="mod-sub">23 ETF · Portafoglio Moneyfarm · Analisi allocazione</div>
+      <p>Modulo specializzato per l'analisi del portafoglio Moneyfarm. Monitora i 23 ETF del portafoglio, analizza l'allocazione corrente rispetto ai target e genera segnali operativi specifici per la gestione del portafoglio gestito.</p>
+      <div class="tag-row">
+        <span class="tag">23 ETF Moneyfarm</span>
+        <span class="tag green">Allocazione target</span>
+        <span class="tag">Segnali operativi</span>
+        <span class="tag orange">Ribilanciamento</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAPTOR LEVA -->
+  <div class="doc-section" id="leva">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(245,158,11,.1);border:1px solid rgba(245,158,11,.2)">⚡</div>
+      <h2>RAPTOR Leva <span>Altri Moduli</span></h2>
+    </div>
+    <div class="mod-card" style="--card-accent:#f59e0b">
+      <h3>RAPTOR Leva</h3>
+      <div class="mod-sub">538 ETF a Leva · Doppia KAMA · VIX Regime</div>
+      <p>Modulo dedicato agli ETF a leva (2x, 3x) e inversi. Integra un sistema di doppia KAMA per filtrare i falsi segnali tipici degli strumenti levereggiati. Il VIX Regime determina automaticamente la modalità operativa in base alla volatilità di mercato.</p>
+      <div class="tag-row">
+        <span class="tag">538 ETF Leva</span>
+        <span class="tag orange">Doppia KAMA</span>
+        <span class="tag">AO EMA3/EMA13</span>
+        <span class="tag purple">VIX Regime</span>
+        <span class="tag green">4 provider</span>
+        <span class="tag">Score qualità</span>
+      </div>
+    </div>
+    <div class="alert-box warn">
+      <span class="alert-icon">⚠️</span>
+      <span>Gli ETF a leva amplificano sia i guadagni che le perdite. Il VIX Regime è attivo per ridurre l'operatività nelle fasi di alta volatilità (VIX &gt; 25). Usare sempre stop loss rigorosi.</span>
+    </div>
+    <table class="doc-table">
+      <tr><th>Regime VIX</th><th>Soglia</th><th>Comportamento</th></tr>
+      <tr><td>Low Vol</td><td>VIX &lt; 15</td><td>Operatività piena, segnali abilitati</td></tr>
+      <tr><td>Normal</td><td>VIX 15–25</td><td>Operatività normale con attenzione</td></tr>
+      <tr><td>High Vol</td><td>VIX &gt; 25</td><td>Segnali ridotti, size dimezzata</td></tr>
+      <tr><td>Crisis</td><td>VIX &gt; 40</td><td>Solo uscite, nessun ingresso</td></tr>
+    </table>
+  </div>
+
+  <!-- RAPTOR CLASSIC -->
+  <div class="doc-section" id="classic">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2)">🔬</div>
+      <h2>RAPTOR Classic <span>Altri Moduli</span></h2>
+    </div>
+    <div class="mod-card" style="--card-accent:#6366f1">
+      <h3>RAPTOR Classic</h3>
+      <div class="mod-sub">White Edition · Versione originale</div>
+      <p>La versione originale di RAPTOR, mantenuta per compatibilità e confronto con i moduli nuovi. Include i segnali Buy &amp; Sell storici e l'export Excel. White Edition con interfaccia chiara e minimalista.</p>
+      <div class="tag-row">
+        <span class="tag purple">White Edition</span>
+        <span class="tag">Buy &amp; Sell</span>
+        <span class="tag orange">Export Excel</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEALTH MERIDIAN -->
+  <div class="doc-section" id="wealth">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(212,170,72,.1);border:1px solid rgba(212,170,72,.2)">💰</div>
+      <h2>Wealth Meridian <span>Altri Moduli</span></h2>
+    </div>
+    <div class="mod-card" style="--card-accent:#d4aa48">
+      <h3>Wealth Meridian</h3>
+      <div class="mod-sub">Gestione patrimoniale completa · IPS · SAA/TAA</div>
+      <p>Piattaforma di gestione patrimoniale professionale. Supporta la creazione dell'Investment Policy Statement (IPS), la definizione dell'allocazione strategica (SAA) e tattica (TAA), la gestione dei PAC e il carico cliente con output in PDF.</p>
+      <div class="tag-row">
+        <span class="tag orange">IPS</span>
+        <span class="tag">SAA / TAA</span>
+        <span class="tag green">PAC</span>
+        <span class="tag">Carico cliente</span>
+        <span class="tag purple">Export PDF</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- STOXX 600 -->
+  <div class="doc-section" id="stoxx">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(59,130,246,.08);border:1px solid rgba(59,130,246,.2)">🇪🇺</div>
+      <h2>STOXX 600 <span>Altri Moduli</span></h2>
+    </div>
+    <div class="mod-card" style="--card-accent:#3b82f6">
+      <h3>STOXX 600</h3>
+      <div class="mod-sub">600 titoli azionari europei · Filtri settoriali</div>
+      <p>Analisi completa dell'indice azionario europeo STOXX 600. Permette di filtrare i titoli per settore GICS, area geografica e segnale operativo. Segnali basati sugli stessi algoritmi KAMA/AO della suite ETF.</p>
+      <div class="tag-row">
+        <span class="tag">600 titoli</span>
+        <span class="tag green">Filtri settoriali</span>
+        <span class="tag">GICS</span>
+        <span class="tag orange">Segnali operativi</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- RAPTOR GEOGRAFIA -->
+  <div class="doc-section" id="geografia">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(14,122,58,.08);border:1px solid rgba(14,122,58,.2)">🌍</div>
+      <h2>RAPTOR Geografia <span>Nuovo Modulo</span></h2>
+    </div>
+    <div class="mod-card" style="--card-accent:#0e7a3a">
+      <h3>RAPTOR Geografia</h3>
+      <div class="mod-sub">Analisi geografica ETF · Heat map · Rotazione macro</div>
+      <p>Modulo di analisi geografica dell'esposizione del portafoglio. Visualizza tramite heat map la distribuzione degli ETF per area geografica (America, Europa, Asia, Emergenti) e calcola i flussi di rotazione tra le macro-aree in tempo reale.</p>
+      <div class="tag-row">
+        <span class="tag green">Heat map</span>
+        <span class="tag">Esposizione geo</span>
+        <span class="tag orange">Rotazione macro</span>
+        <span class="tag">Nord America</span>
+        <span class="tag">Europa</span>
+        <span class="tag">Asia-Pac</span>
+        <span class="tag purple">Emergenti</span>
+      </div>
+    </div>
+    <div class="alert-box ok">
+      <span class="alert-icon">✅</span>
+      <span>Modulo pubblicato — disponibile su GitHub Pages.</span>
+    </div>
+  </div>
+
+  <!-- RAPTOR SCENARIO ENGINE -->
+  <div class="doc-section" id="scenario">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(124,58,237,.08);border:1px solid rgba(124,58,237,.2)">🎯</div>
+      <h2>RAPTOR Scenario Engine <span>Nuovo Modulo</span></h2>
+    </div>
+    <div class="mod-card" style="--card-accent:#7c3aed">
+      <h3>RAPTOR Scenario Engine</h3>
+      <div class="mod-sub">Simulazione scenari macro · Stress test · What-if</div>
+      <p>Motore di simulazione per l'analisi degli scenari macroeconomici. Permette di testare il portafoglio in tre scenari (Bull, Base, Bear) e di eseguire stress test personalizzati simulando shock di mercato, rialzi dei tassi, crisi di liquidità o recessioni.</p>
+      <div class="tag-row">
+        <span class="tag green">Bull scenario</span>
+        <span class="tag orange">Base scenario</span>
+        <span class="tag" style="background:#fff0f0;color:var(--red);border-color:#fca5a5">Bear scenario</span>
+        <span class="tag purple">Stress test</span>
+        <span class="tag">What-if</span>
+      </div>
+    </div>
+    <div class="alert-box ok">
+      <span class="alert-icon">✅</span>
+      <span>Modulo pubblicato — disponibile su GitHub Pages.</span>
+    </div>
+  </div>
+
+  <!-- SHORTCUTS -->
+  <div class="doc-section" id="shortcuts">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(26,111,207,.08);border:1px solid rgba(26,111,207,.15)">⌨️</div>
+      <h2>Shortcut &amp; Navigazione</h2>
+    </div>
+    <div class="shortcut-grid">
+      <div class="shortcut-item"><span class="kbd">Home</span><span class="shortcut-desc">Torna alla Home Suite</span></div>
+      <div class="shortcut-item"><span class="kbd">↗ Tab</span><span class="shortcut-desc">Apri modulo in nuova tab</span></div>
+      <div class="shortcut-item"><span class="kbd">← Home</span><span class="shortcut-desc">Pulsante back nella topbar</span></div>
+      <div class="shortcut-item"><span class="kbd">↻</span><span class="shortcut-desc">Aggiorna ticker prezzi</span></div>
+      <div class="shortcut-item"><span class="kbd">F5</span><span class="shortcut-desc">Ricarica completa del modulo</span></div>
+      <div class="shortcut-item"><span class="kbd">Ctrl+E</span><span class="shortcut-desc">Export Excel (dove disponibile)</span></div>
+    </div>
+  </div>
+
+  <!-- ARCHITETTURA -->
+  <div class="doc-section" id="architecture">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(26,111,207,.08);border:1px solid rgba(26,111,207,.15)">🔧</div>
+      <h2>Architettura Tecnica</h2>
+    </div>
+    <table class="doc-table">
+      <tr><th>Componente</th><th>Dettaglio</th></tr>
+      <tr><td>Fonte dati principale</td><td>Yahoo Finance v8 API (JSON)</td></tr>
+      <tr><td>Fonte dati EU</td><td>Stooq.com (dati europei)</td></tr>
+      <tr><td>Proxy CORS 1</td><td>api.allorigins.win</td></tr>
+      <tr><td>Proxy CORS 2</td><td>corsproxy.io</td></tr>
+      <tr><td>Proxy CORS 3</td><td>Fallback automatico su terzo proxy</td></tr>
+      <tr><td>Batch size</td><td>5 ETF per ciclo</td></tr>
+      <tr><td>Delay tra batch</td><td>600ms (anti rate-limit)</td></tr>
+      <tr><td>Retry automatici</td><td>3 tentativi per ETF</td></tr>
+      <tr><td>Hosting</td><td>GitHub Pages (giorgiogoldoni.github.io)</td></tr>
+      <tr><td>Framework</td><td>Vanilla HTML/CSS/JS — no dipendenze</td></tr>
+    </table>
+    <div class="alert-box info" style="margin-top:14px">
+      <span class="alert-icon">ℹ️</span>
+      <span>Il sistema commuta automaticamente tra proxy se uno risulta irraggiungibile. In caso tutti e tre i proxy falliscano, verificare la connessione di rete o riprovare dopo qualche minuto.</span>
+    </div>
+  </div>
+
+  <!-- CHANGELOG -->
+  <div class="doc-section" id="changelog">
+    <div class="section-header">
+      <div class="section-icon" style="background:rgba(26,111,207,.08);border:1px solid rgba(26,111,207,.15)">📋</div>
+      <h2>Changelog</h2>
+    </div>
+
+    <div class="changelog-item">
+      <div class="cl-version orange">v3.0</div>
+      <div>
+        <div class="cl-date">Marzo 2025</div>
+        <div class="cl-title">RAPTOR Master Suite — Release</div>
+        <ul class="cl-list">
+          <li>Lancio della Master Suite con hub centralizzato</li>
+          <li>Aggiunto ticker bar live con 11 indici/asset</li>
+          <li>Integrazione RAPTOR Geografia e Scenario Engine</li>
+          <li>Sidebar navigazione unificata per tutti i moduli</li>
+          <li>Contatore moduli aggiornato a 13</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="changelog-item">
+      <div class="cl-version">v2.5</div>
+      <div>
+        <div class="cl-date">Febbraio 2025</div>
+        <div class="cl-title">RAPTOR One — Nuovo modulo flagship</div>
+        <ul class="cl-list">
+          <li>RAPTOR One: fusione Alert + Ranking + Grafici</li>
+          <li>8 filtri combinati con logica AND/OR</li>
+          <li>Supporto Stooq EU per ETF europei</li>
+          <li>Aggiunto Heikin-Ashi come view grafica alternativa</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="changelog-item">
+      <div class="cl-version green">v2.0</div>
+      <div>
+        <div class="cl-date">Dicembre 2024</div>
+        <div class="cl-title">RAPTOR Leva + Wealth Meridian</div>
+        <ul class="cl-list">
+          <li>RAPTOR Leva: 538 ETF a leva, doppia KAMA, VIX Regime</li>
+          <li>Wealth Meridian: IPS, SAA/TAA, PAC, export PDF</li>
+          <li>STOXX 600: analisi titoli europei con filtri GICS</li>
+          <li>Migliorato sistema proxy con fallback automatico</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="changelog-item">
+      <div class="cl-version" style="background:var(--muted)">v1.0</div>
+      <div>
+        <div class="cl-date">Ottobre 2024</div>
+        <div class="cl-title">RAPTOR Classic — Prima release</div>
+        <ul class="cl-list">
+          <li>Prima versione pubblica (White Edition)</li>
+          <li>Alert BUY/SELL su universo ETF base</li>
+          <li>Export Excel risultati</li>
+          <li>Indicatori KAMA e Awesome Oscillator</li>
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+</main>
+
+<script>
+// Highlight sidebar link on scroll
+const sections = document.querySelectorAll('.doc-section, .hero');
+const links    = document.querySelectorAll('.sb-link');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if(e.isIntersecting){
+      links.forEach(l => l.classList.remove('active'));
+      const id = e.target.id;
+      const link = document.querySelector(`.sb-link[href="#${id}"]`);
+      if(link) link.classList.add('active');
+    }
+  });
+}, { threshold: 0.3 });
+sections.forEach(s => observer.observe(s));
+</script>
+</body>
+</html>
