@@ -15,18 +15,26 @@
 html,body{height:100%;overflow:hidden;}
 body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);display:flex;flex-direction:column;}
 
-#ticker-bar{height:var(--tb);min-height:var(--tb);background:#fff;border-bottom:1px solid var(--border);display:flex;align-items:center;overflow:hidden;position:fixed;top:0;left:0;right:0;z-index:300;box-shadow:0 1px 3px rgba(0,0,0,.06);}
-#ticker-inner{display:flex;align-items:center;white-space:nowrap;padding-left:var(--sw);flex:1;overflow-x:auto;scrollbar-width:none;}
+--tb:44px;
+}
+#ticker-bar{height:var(--tb);min-height:var(--tb);background:#fff;border-bottom:1px solid var(--border);display:flex;flex-direction:column;position:fixed;top:0;left:0;right:0;z-index:300;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+#ticker-top{display:flex;align-items:center;height:28px;overflow:hidden;}
+#ticker-inner{display:flex;align-items:center;white-space:nowrap;padding-left:var(--sw);flex:1;overflow-x:auto;scrollbar-width:none;height:100%;}
 #ticker-inner::-webkit-scrollbar{display:none;}
-.tick-item{display:inline-flex;align-items:center;gap:5px;padding:0 13px;border-right:1px solid var(--border);height:var(--tb);flex-shrink:0;transition:background .12s;cursor:default;}
+.tick-item{display:inline-flex;align-items:center;gap:4px;padding:0 11px;border-right:1px solid var(--border);height:100%;flex-shrink:0;transition:background .12s;cursor:default;}
 .tick-item:hover{background:#f4f6f9;}
 .tick-name{font-size:9px;font-weight:700;letter-spacing:.4px;color:var(--muted);text-transform:uppercase;}
 .tick-val{font-size:11px;font-weight:600;color:var(--text);font-variant-numeric:tabular-nums;}
 .tick-chg{font-size:10px;font-weight:600;font-variant-numeric:tabular-nums;}
 .tick-up{color:var(--green);}.tick-down{color:var(--red);}.tick-flat{color:var(--muted);}
-.tick-time{margin-left:auto;padding:0 11px;font-size:9px;color:var(--muted);flex-shrink:0;border-left:1px solid var(--border);height:100%;display:flex;align-items:center;gap:6px;}
-.tick-refresh{cursor:pointer;padding:2px 7px;border-radius:4px;background:var(--bg);border:1px solid var(--border);font-size:9px;color:var(--muted);transition:.12s;}
+.tick-live{font-size:7px;color:var(--green);line-height:1;margin-left:1px;}
+.tick-time{padding:0 10px;font-size:9px;color:var(--muted);flex-shrink:0;border-left:1px solid var(--border);height:100%;display:flex;align-items:center;gap:5px;}
+.tick-refresh{cursor:pointer;padding:2px 6px;border-radius:4px;background:var(--bg);border:1px solid var(--border);font-size:9px;color:var(--muted);transition:.12s;}
 .tick-refresh:hover{background:var(--blue);color:#fff;border-color:var(--blue);}
+#ticker-legend{height:16px;background:#f8f9fa;border-top:1px solid var(--border);padding:0 10px 0 calc(var(--sw) + 8px);display:flex;align-items:center;gap:14px;overflow:hidden;}
+.tl-item{display:inline-flex;align-items:center;gap:3px;font-size:8.5px;color:var(--muted);white-space:nowrap;}
+.tl-dot{width:5px;height:5px;border-radius:50%;flex-shrink:0;}
+#tl-status{font-size:8.5px;color:var(--muted);}
 
 #layout{display:flex;flex:1;margin-top:var(--tb);height:calc(100vh - var(--tb));overflow:hidden;}
 
@@ -97,12 +105,21 @@ nav::-webkit-scrollbar-thumb{background:#1a2e4a;border-radius:2px;}
 <body>
 
 <div id="ticker-bar">
-  <div id="ticker-inner">
-    <div class="tick-item"><span class="tick-name">Caricamento...</span></div>
+  <div id="ticker-top">
+    <div id="ticker-inner">
+      <div class="tick-item"><span class="tick-name">Caricamento...</span></div>
+    </div>
+    <div class="tick-time">
+      <span id="tick-clock">--:--:--</span>
+      <span class="tick-refresh" onclick="fetchTicker()">↻</span>
+    </div>
   </div>
-  <div class="tick-time">
-    <span id="tick-clock">--:--:--</span>
-    <span class="tick-refresh" onclick="fetchTicker()">↻</span>
+  <div id="ticker-legend">
+    <span class="tl-item"><span class="tl-dot" style="background:#16a34a"></span>Prezzo live</span>
+    <span class="tl-item"><span class="tl-dot" style="background:#94a3b8"></span>Ultima chiusura</span>
+    <span class="tl-item" style="color:#1a6fcf">▲▼ Var% su chiusura ieri</span>
+    <span class="tl-item">EU chiude 17:30 · USA 22:00 · Futures 24h</span>
+    <span id="tl-status" style="margin-left:auto;font-size:8.5px;color:#94a3b8;padding-right:8px">Aggiornamento ogni 60s</span>
   </div>
 </div>
 
@@ -206,11 +223,55 @@ nav::-webkit-scrollbar-thumb{background:#1a2e4a;border-radius:2px;}
     </div>
 
     <div class="home-stats">
-      <div class="stat-pill"><strong id="stat-etf">520</strong>ETF Monitorati</div>
-      <div class="stat-pill"><strong>538</strong>ETF Leva</div>
+      <div class="stat-pill"><strong>2.253</strong>ETF Unici Totali</div>
+      <div class="stat-pill"><strong id="stat-etf">1.269</strong>ETF in One</div>
+      <div class="stat-pill"><strong>828</strong>ETF in Two</div>
+      <div class="stat-pill"><strong>471</strong>ETF Leva</div>
       <div class="stat-pill"><strong>370</strong>ETF Scanner</div>
       <div class="stat-pill"><strong>18</strong>Moduli attivi</div>
       <div class="stat-pill"><strong id="stat-regime">—</strong>Regime</div>
+    </div>
+
+    <!-- UNIVERSE ETF WIDGET -->
+    <div style="background:#fff;border:1px solid var(--border);border-radius:10px;padding:12px 18px;margin-bottom:14px;box-shadow:var(--shadow)">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+        <div style="font-size:8.5px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;font-weight:700">Universe ETF — 2.253 ticker unici monitorati</div>
+        <div style="font-size:9px;color:var(--muted)">Fonte: One · Two · Leva · Ranking · Alert · Scanner · RWM</div>
+      </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <div style="flex:1;min-width:90px;background:#fff8e1;border:1px solid #f59e0b;border-radius:7px;padding:8px 10px;text-align:center">
+          <div style="font-size:18px;font-weight:700;color:#e07b00;line-height:1">1.269</div>
+          <div style="font-size:9px;color:#e07b00;margin-top:2px">🦅 One</div>
+        </div>
+        <div style="flex:1;min-width:90px;background:#f3e5f5;border:1px solid #9c27b0;border-radius:7px;padding:8px 10px;text-align:center">
+          <div style="font-size:18px;font-weight:700;color:#7c3aed;line-height:1">828</div>
+          <div style="font-size:9px;color:#7c3aed;margin-top:2px">🔁 Two</div>
+        </div>
+        <div style="flex:1;min-width:90px;background:#fff3e0;border:1px solid #f59e0b;border-radius:7px;padding:8px 10px;text-align:center">
+          <div style="font-size:18px;font-weight:700;color:#f59e0b;line-height:1">471</div>
+          <div style="font-size:9px;color:#f59e0b;margin-top:2px">⚡ Leva</div>
+        </div>
+        <div style="flex:1;min-width:90px;background:#e8f5e9;border:1px solid #16a34a;border-radius:7px;padding:8px 10px;text-align:center">
+          <div style="font-size:18px;font-weight:700;color:#16a34a;line-height:1" id="univ-alert">498</div>
+          <div style="font-size:9px;color:#16a34a;margin-top:2px">🔔 Alert</div>
+        </div>
+        <div style="flex:1;min-width:90px;background:#e3f2fd;border:1px solid #1a6fcf;border-radius:7px;padding:8px 10px;text-align:center">
+          <div style="font-size:18px;font-weight:700;color:#1a6fcf;line-height:1">281</div>
+          <div style="font-size:9px;color:#1a6fcf;margin-top:2px">🔭 Scanner</div>
+        </div>
+        <div style="flex:1;min-width:90px;background:#e8eaf6;border:1px solid #3f51b5;border-radius:7px;padding:8px 10px;text-align:center">
+          <div style="font-size:18px;font-weight:700;color:#3f51b5;line-height:1" id="univ-ranking">517</div>
+          <div style="font-size:9px;color:#3f51b5;margin-top:2px">📊 Ranking</div>
+        </div>
+        <div style="flex:1;min-width:90px;background:#fce4ec;border:1px solid #e91e63;border-radius:7px;padding:8px 10px;text-align:center">
+          <div style="font-size:18px;font-weight:700;color:#dc2626;line-height:1">41</div>
+          <div style="font-size:9px;color:#dc2626;margin-top:2px">💰 RWM</div>
+        </div>
+        <div style="flex:1;min-width:110px;background:#0d1526;border:1px solid #1a2e4a;border-radius:7px;padding:8px 10px;text-align:center">
+          <div style="font-size:20px;font-weight:700;color:#22c55e;line-height:1">2.253</div>
+          <div style="font-size:9px;color:#5a7a9a;margin-top:2px">TOTALE UNICI</div>
+        </div>
+      </div>
     </div>
 
     <!-- REGIME WIDGET -->
@@ -426,58 +487,97 @@ document.querySelector('.nav-item[data-id="home"]').addEventListener('click',fun
 
 // ── TICKER ──────────────────────────────────────────────────────────────────
 const TICKERS=[
-  {sym:'^GSPC',label:'S&P 500',fmt:'idx'},
-  {sym:'^IXIC',label:'NASDAQ',fmt:'idx'},
-  {sym:'^GDAXI',label:'DAX',fmt:'idx'},
-  {sym:'^STOXX50E',label:'EUROSTOXX',fmt:'idx'},
-  {sym:'FTSEMIB.MI',label:'FTSE MIB',fmt:'idx'},
-  {sym:'GC=F',label:'Oro $/oz',fmt:'comm'},
-  {sym:'CL=F',label:'WTI $/bl',fmt:'comm'},
-  {sym:'^VIX',label:'VIX',fmt:'vix'},
-  {sym:'^V2TX',label:'VSTOXX',fmt:'vix'},
-  {sym:'EURUSD=X',label:'EUR/USD',fmt:'fx'},
-  {sym:'BTP10Y=RR',label:'BTP 10Y',fmt:'bond'},
+  {sym:'^GSPC',    label:'S&P 500',  fmt:'idx', note:'USA · chiude 22:00 IT'},
+  {sym:'^IXIC',    label:'NASDAQ',   fmt:'idx', note:'USA · chiude 22:00 IT'},
+  {sym:'^GDAXI',   label:'DAX',      fmt:'idx', note:'EU · chiude 17:30 IT'},
+  {sym:'^STOXX50E',label:'EUROSTOXX',fmt:'idx', note:'EU · chiude 17:30 IT'},
+  {sym:'FTSEMIB.MI',label:'FTSE MIB',fmt:'idx', note:'IT · chiude 17:30'},
+  {sym:'GC=F',     label:'Oro $/oz', fmt:'comm',note:'Futures · 24h'},
+  {sym:'CL=F',     label:'WTI $/bl', fmt:'comm',note:'Futures · 24h'},
+  {sym:'^VIX',     label:'VIX',      fmt:'vix', note:'Indice volatilità S&P 500'},
+  {sym:'^V2TX',    label:'VSTOXX',   fmt:'vix', note:'Indice volatilità EUROSTOXX'},
+  {sym:'EURUSD=X', label:'EUR/USD',  fmt:'fx',  note:'Forex · 24h'},
+  {sym:'BTP10Y=RR',label:'BTP 10Y',  fmt:'bond',note:'Rendimento BTP Italia 10 anni'},
 ];
-const PA=s=>`https://api.allorigins.win/get?url=${encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(s)+'?interval=1d&range=5d')}`;
-const PB=s=>`https://corsproxy.io/?${encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(s)+'?interval=1d&range=5d')}`;
-let useB=false;
+
+// 3 proxy in cascata
+const PROXIES=[
+  s=>`https://api.allorigins.win/get?url=${encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(s)+'?interval=1d&range=5d')}`,
+  s=>`https://corsproxy.io/?${encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(s)+'?interval=1d&range=5d')}`,
+  s=>`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent('https://query1.finance.yahoo.com/v8/finance/chart/'+encodeURIComponent(s)+'?interval=1d&range=5d')}`,
+];
+
 function fmtVal(v,fmt){
   if(v==null||isNaN(v)) return '—';
-  if(fmt==='fx') return v.toFixed(4);
-  if(fmt==='vix') return v.toFixed(2);
+  if(fmt==='fx')   return v.toFixed(4);
+  if(fmt==='vix')  return v.toFixed(2);
   if(fmt==='bond') return v.toFixed(3)+'%';
   if(fmt==='comm') return v.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});
   return v>=1000?v.toLocaleString('it-IT',{maximumFractionDigits:0}):v.toFixed(2);
 }
-async function fetchOne(sym,fmt){
-  const r=await fetch((useB?PB:PA)(sym),{signal:AbortSignal.timeout(7000)});
-  if(!r.ok) throw new Error('HTTP '+r.status);
-  const raw=await r.json();
-  const body=raw.contents?JSON.parse(raw.contents):raw;
-  const meta=body?.chart?.result?.[0]?.meta;
-  if(!meta) throw new Error('no meta');
-  const price=meta.regularMarketPrice??meta.chartPreviousClose;
-  const prev=meta.chartPreviousClose??meta.previousClose;
-  const chg=(prev&&prev!==0)?(price-prev)/prev*100:null;
-  return{price,chg};
+
+async function fetchOne(sym){
+  for(const proxy of PROXIES){
+    try{
+      const r=await fetch(proxy(sym),{signal:AbortSignal.timeout(8000)});
+      if(!r.ok) continue;
+      const raw=await r.json();
+      const body=raw.contents?JSON.parse(raw.contents):raw;
+      const meta=body?.chart?.result?.[0]?.meta;
+      if(!meta) continue;
+      const price=meta.regularMarketPrice??meta.chartPreviousClose;
+      const prev=meta.chartPreviousClose??meta.previousClose;
+      const chg=(prev&&prev!==0)?(price-prev)/prev*100:null;
+      const state=meta.marketState||'CLOSED';
+      const isLive=(state==='REGULAR'||state==='PRE'||state==='POST');
+      return{price,chg,isLive};
+    }catch(e){ continue; }
+  }
+  throw new Error('tutti i proxy falliti');
 }
+
 async function fetchTicker(){
+  // Prima passata
+  let results=await Promise.allSettled(TICKERS.map(t=>fetchOne(t.sym)));
+  // Retry automatico per i falliti
+  results=await Promise.allSettled(results.map((res,i)=>
+    res.status==='fulfilled'?Promise.resolve(res.value):fetchOne(TICKERS[i].sym)
+  ));
+
   const inner=document.getElementById('ticker-inner');
-  inner.innerHTML='<div class="tick-item"><span class="tick-name" style="color:var(--muted)">Aggiornamento...</span></div>';
-  const results=await Promise.allSettled(TICKERS.map(t=>fetchOne(t.sym,t.fmt).then(r=>({...r,label:t.label,fmt:t.fmt}))));
-  if(results.filter(r=>r.status==='rejected').length===TICKERS.length) useB=!useB;
   inner.innerHTML='';
-  TICKERS.forEach((t,i)=>{
-    const res=results[i],ok=res.status==='fulfilled';
-    const price=ok?res.value.price:null,chg=ok?res.value.chg:null;
+  let liveN=0, okN=0;
+  results.forEach((res,i)=>{
+    const ok=res.status==='fulfilled';
+    const price=ok?res.value.price:null;
+    const chg=ok?res.value.chg:null;
+    const isLive=ok&&res.value.isLive;
+    if(ok){okN++;if(isLive)liveN++;}
+    const t=TICKERS[i];
     const valStr=fmtVal(price,t.fmt);
     const chgStr=chg!=null?((chg>=0?'+':'')+chg.toFixed(2)+'%'):'—';
     const cls=chg==null?'tick-flat':chg>0?'tick-up':'tick-down';
     const arrow=chg==null?'':chg>0?'▲':chg<0?'▼':'▸';
-    inner.innerHTML+=`<div class="tick-item" title="${t.label}"><span class="tick-name">${t.label}</span><span class="tick-val">${valStr}</span><span class="tick-chg ${cls}">${arrow}${chgStr}</span></div>`;
+    const liveDot=isLive?'<span class="tick-live">●</span>':'';
+    const tooltip=`${t.note||t.label} · ${isLive?'Prezzo live':'Ultima chiusura'}${chg!=null?' · Var% su chiusura ieri':''}`;
+    inner.innerHTML+=`<div class="tick-item" title="${tooltip}">
+      <span class="tick-name">${t.label}${liveDot}</span>
+      <span class="tick-val">${valStr}</span>
+      <span class="tick-chg ${cls}">${arrow}${chgStr}</span>
+    </div>`;
   });
+  // Aggiorna status leggenda
+  const tls=document.getElementById('tl-status');
+  if(tls){
+    const now=new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit'});
+    tls.textContent=`${okN}/${TICKERS.length} ok · ${liveN} live · agg. ${now}`;
+  }
 }
-function clock(){ document.getElementById('tick-clock').textContent=new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'}); }
+
+function clock(){
+  document.getElementById('tick-clock').textContent=
+    new Date().toLocaleTimeString('it-IT',{hour:'2-digit',minute:'2-digit',second:'2-digit'});
+}
 setInterval(clock,1000); clock(); fetchTicker(); setInterval(fetchTicker,60000);
 
 // ── REGIME WIDGET ────────────────────────────────────────────────────────────
