@@ -153,7 +153,7 @@ nav::-webkit-scrollbar-thumb{background:#1a2e4a;border-radius:2px;}
     <div class="nav-item" onclick="loadTool(this)" data-url="https://giorgiogoldoni.github.io/fixed/RAPTOR_Advice.html" data-title="RAPTOR Advice" data-id="advice">
       <span class="nav-icon">💼</span> Advice
     </div>
-    <div class="nav-item" onclick="loadTool(this)" data-url="https://giorgiogoldoni.github.io/fixed/RAPTOR_Portfolio.html" data-title="RAPTOR Portfolio" data-id="portfolio">
+    <div class="nav-item" onclick="loadTool(this)" data-url="https://giorgiogoldoni.github.io/raptor-macro-mover/raptor-portfolio.html" data-title="RAPTOR Portfolio" data-id="portfolio">
       <span class="nav-icon">🗂️</span> Portfolio
     </div>
 
@@ -332,10 +332,10 @@ nav::-webkit-scrollbar-thumb{background:#1a2e4a;border-radius:2px;}
         <div class="card-btn">APRI →</div>
       </div>
 
-      <div class="card" onclick="loadCard('portfolio')">
-        <div class="card-top"><div class="card-icon">🗂️</div><div class="card-num"><strong>—</strong><span>&nbsp;</span></div></div>
-        <h3>RAPTOR Portfolio</h3>
-        <p>Gestione portafoglio · Pesi · Performance storica · Allocazione</p>
+      <div class="card" style="--card-accent:#FFD700" onclick="window.open('https://giorgiogoldoni.github.io/raptor-macro-mover/raptor-portfolio.html','_blank')">
+        <div class="card-top"><div class="card-icon">🗂️</div><div class="card-num"><strong id="pf-positions">—</strong><span>ETF</span></div></div>
+        <h3>RAPTOR Portfolio <span class="sup-badge" style="background:#FFD700;color:#000">NEW</span></h3>
+        <p id="pf-card-sub">Macro &times; Momentum &middot; 15 ETF universe &middot; Ribilanciamento automatico</p>
         <div class="card-btn">APRI →</div>
       </div>
 
