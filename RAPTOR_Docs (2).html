@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RAPTOR Docs — Documentazione Ufficiale</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
+:root{
+  --bg:#f4f6f9;--card:#fff;--border:#dde3ec;--text:#1a2332;--muted:#6b7c93;
+  --accent:#e07b00;--blue:#1a6fcf;--green:#16a34a;--red:#dc2626;
+  --purple:#7c3aed;--gold:#d4aa48;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:13px;line-height:1.6;}
+.top-bar{background:#0d1526;color:#fff;padding:10px 24px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100;}
+.top-bar a{color:#5a9fd4;text-decoration:none;font-size:12px;}
+.top-bar a:hover{color:#fff;}
+.top-bar h1{font-size:14px;font-weight:700;letter-spacing:1px;flex:1;}
+.wrap{max-width:960px;margin:0 auto;padding:28px 20px;}
+
+/* HERO */
+.hero{background:linear-gradient(135deg,#0d1526,#1a2e4a);border-radius:12px;padding:32px;margin-bottom:28px;color:#fff;}
+.hero h2{font-size:22px;font-weight:800;letter-spacing:2px;margin-bottom:6px;}
+.hero p{color:#7a9ab8;font-size:13px;max-width:600px;}
+.stats{display:flex;gap:20px;flex-wrap:wrap;margin-top:20px;}
+.stat{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:12px 18px;text-align:center;}
+.stat strong{display:block;font-size:22px;font-weight:800;color:#00D4FF;}
+.stat span{font-size:10px;color:#7a9ab8;letter-spacing:1px;text-transform:uppercase;}
+
+/* SEZIONI */
+.section{margin-bottom:32px;}
+.section-title{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:14px;padding-bottom:6px;border-bottom:2px solid var(--border);}
+
+/* MODULI */
+.module-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:18px 20px;margin-bottom:12px;border-left:4px solid var(--accent);}
+.module-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.module-icon{font-size:20px;}
+.module-name{font-size:14px;font-weight:700;}
+.module-sub{font-size:11px;color:var(--muted);margin-top:1px;}
+.module-desc{font-size:12px;color:var(--muted);margin-bottom:10px;line-height:1.7;}
+.tags{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px;}
+.tag{font-size:10px;padding:2px 8px;border-radius:20px;background:var(--bg);border:1px solid var(--border);color:var(--muted);}
+.tag.green{background:#f0fdf4;border-color:#86efac;color:#16a34a;}
+.tag.blue{background:#eff6ff;border-color:#93c5fd;color:#1a6fcf;}
+.tag.orange{background:#fff7ed;border-color:#fdba74;color:#ea580c;}
+.tag.purple{background:#faf5ff;border-color:#d8b4fe;color:#7c3aed;}
+.tag.gold{background:#fffbeb;border-color:#fde68a;color:#d97706;}
+table{width:100%;border-collapse:collapse;font-size:11px;margin-top:8px;}
+th{background:#f8fafc;font-weight:600;text-align:left;padding:6px 10px;border-bottom:2px solid var(--border);color:var(--muted);letter-spacing:.5px;}
+td{padding:6px 10px;border-bottom:1px solid var(--border);}
+tr:last-child td{border-bottom:none;}
+
+/* GUIDA OPERATIVA */
+.op-guide{background:linear-gradient(135deg,#fffbeb,#fff7ed);border:1px solid #fde68a;border-radius:10px;padding:20px;margin-bottom:12px;}
+.op-guide h3{font-size:13px;font-weight:700;color:#92400e;margin-bottom:12px;}
+.signal-row{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid #fde68a;}
+.signal-row:last-child{border-bottom:none;}
+.signal-badge{font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:1px;}
+.s-hold{background:#f0fdf4;color:#16a34a;border:1px solid #86efac;}
+.s-partial{background:#fffbeb;color:#d97706;border:1px solid #fde68a;}
+.s-rebalance{background:#fff1f2;color:#dc2626;border:1px solid #fca5a5;}
+.s-regime{background:#faf5ff;color:#7c3aed;border:1px solid #d8b4fe;}
+.signal-text{font-size:12px;color:var(--text);}
+.signal-text strong{color:var(--text);}
+.timing-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px;}
+.timing-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 14px;}
+.timing-box h4{font-size:10px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;}
+.timing-box p{font-size:12px;color:var(--text);}
+
+/* ARCHITETTURA */
+.arch-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+@media(max-width:600px){.arch-grid{grid-template-columns:1fr;}}
+.arch-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px;}
+.arch-box h4{font-size:10px;font-weight:700;letter-spacing:1px;color:var(--muted);text-transform:uppercase;margin-bottom:8px;}
+.arch-row{font-size:11px;margin-bottom:4px;display:flex;justify-content:space-between;gap:8px;}
+.arch-row span{color:var(--muted);}
+.arch-row strong{color:var(--text);text-align:right;}
+
+/* CHANGELOG */
+.changelog-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;margin-bottom:10px;}
+.cl-header{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.cl-version{font-size:12px;font-weight:700;background:#0d1526;color:#fff;padding:2px 10px;border-radius:20px;}
+.cl-date{font-size:11px;color:var(--muted);}
+.cl-title{font-size:13px;font-weight:600;flex:1;}
+.cl-items{list-style:none;font-size:12px;color:var(--muted);}
+.cl-items li{padding:3px 0;padding-left:16px;position:relative;}
+.cl-items li::before{content:'→';position:absolute;left:0;color:var(--accent);}
+
+/* INFO BOX */
+.info-box{background:#eff6ff;border:1px solid #93c5fd;border-radius:8px;padding:12px 16px;font-size:12px;color:#1e40af;margin:10px 0;}
+.warn-box{background:#fff7ed;border:1px solid #fdba74;border-radius:8px;padding:12px 16px;font-size:12px;color:#9a3412;margin:10px 0;}
+</style>
+</head>
+<body>
+
+<div class="top-bar">
+  <a href="https://giorgiogoldoni.github.io/trader/">← Torna alla Suite</a>
+  <h1>📚 Documentazione Ufficiale — RAPTOR Master Suite</h1>
+  <span style="font-size:11px;color:#3a5a7a">v3.2 · Aprile 2026</span>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <div class="hero">
+    <h2>RAPTOR MASTER SUITE</h2>
+    <p>Rapid Analysis &amp; Portfolio Trading Operations Report — piattaforma integrata per l'analisi tecnica di ETF, gestione portafoglio e analisi macro. 18 moduli attivi, oltre 2.253 ETF unici monitorati, fonti dati Yahoo Finance, BLS, Groq AI.</p>
+    <div class="stats">
+      <div class="stat"><strong>2.253</strong><span>ETF Unici</span></div>
+      <div class="stat"><strong>18</strong><span>Moduli Attivi</span></div>
+      <div class="stat"><strong>850+</strong><span>Settimane Storiche</span></div>
+      <div class="stat"><strong>14</strong><span>Scenari Macro</span></div>
+      <div class="stat"><strong>13:00</strong><span>Update Giornaliero</span></div>
+    </div>
+  </div>
+
+  <div class="info-box">
+    ℹ️ Tutti i moduli girano nel browser o su GitHub Pages — nessun server backend, nessun login. I dati vengono recuperati in tempo reale da Yahoo Finance, BLS e Groq AI tramite GitHub Actions.
+  </div>
+
+  <!-- MODULI PRINCIPALI -->
+  <div class="section">
+    <div class="section-title">Moduli Principali</div>
+
+    <div class="module-card" style="border-left-color:#e07b00">
+      <div class="module-header">
+        <div class="module-icon">🦅</div>
+        <div><div class="module-name">RAPTOR One</div><div class="module-sub">1.269 ETF · Yahoo Finance + Stooq EU · 8 filtri combinati</div></div>
+      </div>
+      <div class="module-desc">Modulo principale. Integra Alert, Ranking e Grafici. Filtra l'universo ETF secondo 8 parametri tecnici combinati e visualizza i risultati in forma tabellare e grafica.</div>
+      <div class="tags"><span class="tag green">Alert BUY/SELL</span><span class="tag blue">Score 0–200</span><span class="tag">8 filtri</span><span class="tag">KAMA</span><span class="tag">AO</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#16a34a">
+      <div class="module-header">
+        <div class="module-icon">🔔</div>
+        <div><div class="module-name">RAPTOR Alert v2.0</div><div class="module-sub">498 ETF · KAMA/SAR · Tripla chiamata proxy</div></div>
+      </div>
+      <div class="module-desc">Motore di alert dedicato con KAMA e Parabolic SAR. Tripla chiamata con fallback automatico tra proxy CORS per massimizzare la disponibilità dei dati.</div>
+      <div class="tags"><span class="tag green">BUY/SELL</span><span class="tag blue">KAMA</span><span class="tag">SAR</span><span class="tag">Export Excel</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#1a6fcf">
+      <div class="module-header">
+        <div class="module-icon">📊</div>
+        <div><div class="module-name">RAPTOR Ranking</div><div class="module-sub">517 ETF · Score 0–200 · JSON live</div></div>
+      </div>
+      <div class="module-desc">Classifica tutti gli ETF per Score composito aggiornato ogni ora. Soglie operative: STOP &lt;60, USCITA 60–90, ATTENZIONE 90–120, BUY &gt;160.</div>
+      <div class="tags"><span class="tag blue">Score 0–200</span><span class="tag green">Live JSON</span><span class="tag">Soglie operative</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#8b5cf6">
+      <div class="module-header">
+        <div class="module-icon">🔮</div>
+        <div><div class="module-name">RAPTOR Macro Mover</div><div class="module-sub">850+ settimane · 14 scenari · Markov Chain · Groq AI</div></div>
+      </div>
+      <div class="module-desc">Classificatore macro storico. Calcola il regime di mercato corrente (14 scenari) a partire da CPI, yield curve, HY spread e Fed Funds tramite Yahoo Finance e BLS. Previsione Markov Chain a 1/2/4/8 settimane. Commento dell'Oracolo generato da Groq AI (llama-3.3-70b).</div>
+      <div class="tags"><span class="tag purple">14 Scenari</span><span class="tag blue">Markov Chain</span><span class="tag gold">Groq AI</span><span class="tag green">Aggiornamento 13:00</span></div>
+      <table>
+        <thead><tr><th>Indicatore</th><th>Fonte</th><th>Frequenza</th></tr></thead>
+        <tbody>
+          <tr><td>CPI YoY / MoM</td><td>BLS API pubblica</td><td>Mensile</td></tr>
+          <tr><td>Yield Curve (10Y-2Y)</td><td>Yahoo Finance ^TNX, ^IRX</td><td>Giornaliera</td></tr>
+          <tr><td>Fed Funds (proxy)</td><td>Yahoo Finance ^IRX</td><td>Giornaliera</td></tr>
+          <tr><td>HY Spread (proxy)</td><td>Yahoo Finance HYG/LQD</td><td>Giornaliera</td></tr>
+          <tr><td>Real Yield (proxy)</td><td>Yahoo Finance ^TNX</td><td>Giornaliera</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="module-card" style="border-left-color:#d4aa48">
+      <div class="module-header">
+        <div class="module-icon">📐</div>
+        <div><div class="module-name">RAPTOR Allocation</div><div class="module-sub">9 sotto-classi · Opzione C blended · Storico giornaliero</div></div>
+      </div>
+      <div class="module-desc">Allocazione operativa derivata dal vettore scenari Macro Mover. Calcola la media pesata sulle probabilità di tutti gli scenari (Opzione C blended) per 9 sotto-classi di ETF quotati su Borsa Italiana.</div>
+      <div class="tags"><span class="tag gold">9 Sotto-classi</span><span class="tag purple">Blended Macro</span><span class="tag green">Export Excel</span></div>
+      <table>
+        <thead><tr><th>Sotto-classe</th><th>Ticker EU</th><th>Macro-classe</th></tr></thead>
+        <tbody>
+          <tr><td>Equity Growth</td><td>SWRD.MI, CSPX.MI, EQQQ.MI</td><td>EQUITY</td></tr>
+          <tr><td>Equity Value</td><td>IWVL.MI, XDEV.MI</td><td>EQUITY</td></tr>
+          <tr><td>Equity EM</td><td>EIMI.MI, IEMA.MI</td><td>EQUITY</td></tr>
+          <tr><td>Bond Corti</td><td>XEON.MI, IS3N.MI, IB01.SW</td><td>BOND</td></tr>
+          <tr><td>Bond Inflation</td><td>XTIP.MI, TIP1A.MI</td><td>BOND</td></tr>
+          <tr><td>Bond HY</td><td>IHYG.MI, EHYA.MI</td><td>BOND</td></tr>
+          <tr><td>Oro</td><td>PHAG.MI, PHAU.MI, SGBS.MI</td><td>MATERIE</td></tr>
+          <tr><td>Energia</td><td>WTI.MI, BRENT.MI, CRUD.MI</td><td>MATERIE</td></tr>
+          <tr><td>Mat. Industriali</td><td>COPA.MI, NICK.MI, ALUM.MI</td><td>MATERIE</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="module-card" style="border-left-color:#FFD700">
+      <div class="module-header">
+        <div class="module-icon">🗂️</div>
+        <div><div class="module-name">RAPTOR Portfolio</div><div class="module-sub">15 ETF Universe · Ibrido Macro × Momentum · Segnali ribilanciamento</div></div>
+      </div>
+      <div class="module-desc">Portafoglio modello ottimizzato settimanalmente. Seleziona i migliori ETF da un universo di 15 strumenti quotati su Borsa Italiana usando un algoritmo ibrido Macro (55%) × Momentum (30%) × Quality (15%). Include risk-scaling per gli ETF WisdomTree Efficient Core (90/60, nozionale 150%).</div>
+      <div class="tags"><span class="tag gold">15 ETF Universe</span><span class="tag purple">Macro × Momentum</span><span class="tag green">Segnale settimanale</span><span class="tag blue">Risk Scaling EC</span></div>
+      <table>
+        <thead><tr><th>Categoria</th><th>ETF</th><th>Note</th></tr></thead>
+        <tbody>
+          <tr><td>Equity ETP</td><td>WWRD, WSPX, WSPE, WS5X, WNAS</td><td>WisdomTree collateral-backed</td></tr>
+          <tr><td>Efficient Core</td><td>NTSX, NTSG, NTSZ, WRTY</td><td>90/60 — nozionale 1.5x</td></tr>
+          <tr><td>Bond HY</td><td>STHY, STHE, EUHI, EUHA</td><td>PIMCO distribuente/acc</td></tr>
+          <tr><td>Bond IG</td><td>PJS1</td><td>PIMCO Euro Short Maturity</td></tr>
+          <tr><td>Bond EM</td><td>EMLI</td><td>PIMCO EM Local Bond</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+
+  <!-- GUIDA OPERATIVA -->
+  <div class="section">
+    <div class="section-title">Guida Operativa — Come Usare i Segnali Portfolio</div>
+
+    <div class="op-guide">
+      <h3>📋 Segnali di Ribilanciamento</h3>
+      <div class="signal-row">
+        <span class="signal-badge s-hold">HOLD</span>
+        <div class="signal-text"><strong>Nessuna azione.</strong> Il portafoglio è allineato al regime. Deviazione massima &lt;3% rispetto ai pesi target. Monitora senza intervenire.</div>
+      </div>
+      <div class="signal-row">
+        <span class="signal-badge s-partial">PARTIAL</span>
+        <div class="signal-text"><strong>Ribilanciamento parziale.</strong> Deviazione 3-8% su alcune posizioni. Aggiusta solo gli ETF con delta significativo — non è necessario ribilanciare tutto il portafoglio.</div>
+      </div>
+      <div class="signal-row">
+        <span class="signal-badge s-rebalance">REBALANCE</span>
+        <div class="signal-text"><strong>Ribilanciamento completo.</strong> Deviazione &gt;8% o cambio del regime dominante. Aggiusta tutte le posizioni ai nuovi pesi target.</div>
+      </div>
+      <div class="signal-row">
+        <span class="signal-badge s-regime">REGIME CHANGE</span>
+        <div class="signal-text"><strong>Priorità massima.</strong> Il regime macro è cambiato (es. REFLAZIONE → RISK_OFF). Agisci il lunedì successivo all'apertura dei mercati. Questo segnale sovrascrive qualsiasi altro.</div>
+      </div>
+    </div>
+
+    <div class="op-guide">
+      <h3>🗓️ Timing Operativo</h3>
+      <div class="timing-grid">
+        <div class="timing-box">
+          <h4>Giovedì 13:00</h4>
+          <p>Il workflow aggiorna tutti i dati: scenari macro, allocazione, portafoglio ottimizzato.</p>
+        </div>
+        <div class="timing-box">
+          <h4>Venerdì mattina</h4>
+          <p>Leggi il segnale su <strong>raptor-portfolio.html</strong>. Controlla il regime e il segnale ribilanciamento.</p>
+        </div>
+        <div class="timing-box">
+          <h4>Lunedì apertura (9:00)</h4>
+          <p>Esegui gli ordini su Borsa Italiana. Gli ETF hanno spread più stretti a mercato aperto stabile.</p>
+        </div>
+        <div class="timing-box">
+          <h4>Perché non venerdì?</h4>
+          <p>Evita il rischio weekend (news geopolitiche, gap apertura). I mercati EU aprono con più liquidità lunedì.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="warn-box">
+      ⚠️ Gli ETF WisdomTree Efficient Core (NTSX, NTSG, NTSZ, WRTY) hanno esposizione nozionale 150% (90% equity + 60% bond via futures). Il sistema applica automaticamente un risk-scaling di 1.5x nel calcolo dei pesi — un peso del 10% corrisponde a un'esposizione effettiva del 15%.
+    </div>
+
+  </div>
+
+  <!-- ALTRI MODULI -->
+  <div class="section">
+    <div class="section-title">Altri Moduli</div>
+
+    <div class="module-card" style="border-left-color:#f59e0b">
+      <div class="module-header"><div class="module-icon">⚡</div><div><div class="module-name">RAPTOR Leva</div><div class="module-sub">471 ETF a Leva · Doppia KAMA · VIX Regime</div></div></div>
+      <div class="module-desc">Modulo dedicato agli ETF a leva (2x, 3x) e inversi. Doppia KAMA per filtrare falsi segnali. VIX Regime determina automaticamente la modalità operativa.</div>
+      <div class="tags"><span class="tag orange">471 ETF Leva</span><span class="tag">Doppia KAMA</span><span class="tag">VIX Regime</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#22c55e">
+      <div class="module-header"><div class="module-icon">🔁</div><div><div class="module-name">RAPTOR Two</div><div class="module-sub">828 ETF · Gestione dinamica</div></div></div>
+      <div class="module-desc">Universo allargato di 828 ETF con gestione dinamica del watchlist e segnali operativi.</div>
+      <div class="tags"><span class="tag green">828 ETF</span><span class="tag">Gestione dinamica</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#0ea5e9">
+      <div class="module-header"><div class="module-icon">🔭</div><div><div class="module-name">RAPTOR Scanner</div><div class="module-sub">370 ETF · 19 indicatori</div></div></div>
+      <div class="module-desc">Scanner con 19 indicatori tecnici: Supertrend, KAMA, Bollinger, ADX, RSI, SAR. Segnali BUY/SELL/WATCH.</div>
+      <div class="tags"><span class="tag blue">370 ETF</span><span class="tag">19 Indicatori</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#e07b00">
+      <div class="module-header"><div class="module-icon">🏭</div><div><div class="module-name">RAPTOR Settoriali</div><div class="module-sub">Analisi settoriale · Rotazione</div></div></div>
+      <div class="module-desc">Analisi della rotazione settoriale con heatmap e confronto performance per settore GICS.</div>
+      <div class="tags"><span class="tag orange">Rotazione settoriale</span><span class="tag">Heatmap</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#d4aa48">
+      <div class="module-header"><div class="module-icon">💰</div><div><div class="module-name">Wealth Meridian</div><div class="module-sub">41 ETF · IPS · SAA/TAA · PAC</div></div></div>
+      <div class="module-desc">Piattaforma di gestione patrimoniale professionale. IPS, allocazione strategica e tattica, PAC, export PDF.</div>
+      <div class="tags"><span class="tag gold">IPS</span><span class="tag">SAA/TAA</span><span class="tag">PAC</span><span class="tag">Export PDF</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#3b82f6">
+      <div class="module-header"><div class="module-icon">🇪🇺</div><div><div class="module-name">STOXX 600</div><div class="module-sub">600 titoli · Filtri settoriali · GICS</div></div></div>
+      <div class="module-desc">Analisi completa dell'indice azionario europeo STOXX 600 con filtri settoriali e segnali KAMA/AO.</div>
+      <div class="tags"><span class="tag blue">600 Titoli</span><span class="tag">GICS</span><span class="tag">Segnali operativi</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#0e7a3a">
+      <div class="module-header"><div class="module-icon">🌍</div><div><div class="module-name">RAPTOR Geografia</div><div class="module-sub">Heatmap · Rotazione macro · 4 aree</div></div></div>
+      <div class="module-desc">Analisi geografica dell'esposizione del portafoglio. Heatmap per area (America, Europa, Asia, EM) con flussi di rotazione.</div>
+      <div class="tags"><span class="tag green">Heatmap</span><span class="tag">4 Aree Geo</span><span class="tag">Rotazione</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#7c3aed">
+      <div class="module-header"><div class="module-icon">🎯</div><div><div class="module-name">RAPTOR Scenario Engine</div><div class="module-sub">52 scenari · 3 aree geo · Stress test</div></div></div>
+      <div class="module-desc">Motore di simulazione macro con 52 scenari su 3 aree geografiche (USA 40%, EU 35%, Asia 25%). Stress test e what-if analysis. Complementare al Macro Mover.</div>
+      <div class="tags"><span class="tag purple">52 Scenari</span><span class="tag">3 Aree Geo</span><span class="tag">Stress Test</span></div>
+    </div>
+
+    <div class="module-card" style="border-left-color:#0e7a3a">
+      <div class="module-header"><div class="module-icon">🎛️</div><div><div class="module-name">Command Center</div><div class="module-sub">Aggregatore · Segnali live · Consensus</div></div></div>
+      <div class="module-desc">Centro di controllo che aggrega i segnali da tutti i moduli. Legge il JSON del RSE per il regime globale e il JSON del Ranking per i top ETF.</div>
+      <div class="tags"><span class="tag green">Aggregatore</span><span class="tag">Regime RSE</span><span class="tag">Top ETF</span></div>
+    </div>
+
+  </div>
+
+  <!-- ARCHITETTURA -->
+  <div class="section">
+    <div class="section-title">Architettura Tecnica</div>
+    <div class="arch-grid">
+      <div class="arch-box">
+        <h4>Dati Prezzi ETF</h4>
+        <div class="arch-row"><span>Fonte principale</span><strong>Yahoo Finance v8</strong></div>
+        <div class="arch-row"><span>Fonte EU</span><strong>Stooq.com</strong></div>
+        <div class="arch-row"><span>Proxy CORS 1</span><strong>allorigins.win</strong></div>
+        <div class="arch-row"><span>Proxy CORS 2</span><strong>corsproxy.io</strong></div>
+        <div class="arch-row"><span>Retry</span><strong>3 tentativi auto</strong></div>
+      </div>
+      <div class="arch-box">
+        <h4>Dati Macro</h4>
+        <div class="arch-row"><span>Yield/Spread</span><strong>Yahoo Finance</strong></div>
+        <div class="arch-row"><span>CPI USA</span><strong>BLS API pubblica</strong></div>
+        <div class="arch-row"><span>Oracle AI</span><strong>Groq llama-3.3-70b</strong></div>
+        <div class="arch-row"><span>Update</span><strong>GitHub Actions 13:00</strong></div>
+        <div class="arch-row"><span>Schedule</span><strong>Lun-Ven feriali</strong></div>
+      </div>
+      <div class="arch-box">
+        <h4>Infrastruttura</h4>
+        <div class="arch-row"><span>Hosting</span><strong>GitHub Pages</strong></div>
+        <div class="arch-row"><span>Framework</span><strong>Vanilla HTML/CSS/JS</strong></div>
+        <div class="arch-row"><span>Backend</span><strong>Nessuno</strong></div>
+        <div class="arch-row"><span>Login</span><strong>Non richiesto</strong></div>
+        <div class="arch-row"><span>Costo</span><strong>Gratuito</strong></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- UNIVERSE ETF -->
+  <div class="section">
+    <div class="section-title">Universe ETF — Breakdown</div>
+    <table>
+      <thead><tr><th>Modulo</th><th>ETF</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>RAPTOR One</td><td>1.269</td><td>Universo principale</td></tr>
+        <tr><td>RAPTOR Two</td><td>828</td><td>Universo allargato</td></tr>
+        <tr><td>RAPTOR Leva</td><td>471</td><td>ETF leva e inversi</td></tr>
+        <tr><td>RAPTOR Alert</td><td>498</td><td>Alert KAMA/SAR</td></tr>
+        <tr><td>RAPTOR Scanner</td><td>370</td><td>19 indicatori</td></tr>
+        <tr><td>RAPTOR Ranking</td><td>517</td><td>Score live JSON</td></tr>
+        <tr><td>Wealth Meridian</td><td>41</td><td>Portafoglio gestito</td></tr>
+        <tr><td><strong>Totale unici</strong></td><td><strong>2.253</strong></td><td>Deduplica cross-modulo</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- CHANGELOG -->
+  <div class="section">
+    <div class="section-title">Changelog</div>
+
+    <div class="changelog-item">
+      <div class="cl-header">
+        <span class="cl-version">v3.2</span>
+        <span class="cl-date">Aprile 2026</span>
+        <span class="cl-title">RAPTOR Macro Mover + Portfolio Optimizer</span>
+      </div>
+      <ul class="cl-items">
+        <li>RAPTOR Macro Mover: classificatore macro su 850+ settimane, 14 scenari, Markov Chain</li>
+        <li>RAPTOR Allocation: allocazione blended 9 sotto-classi ETF EU (Opzione C)</li>
+        <li>RAPTOR Portfolio: portafoglio modello 15 ETF con ottimizzazione Macro × Momentum</li>
+        <li>Sostituzione FRED API con Yahoo Finance + BLS API pubblica (nessuna key richiesta)</li>
+        <li>Integrazione Groq AI (llama-3.3-70b) per commento oracolo giornaliero</li>
+        <li>GitHub Actions workflow unificato: 3 script in sequenza, commit unico alle 13:00 IT</li>
+        <li>Card Portfolio attiva nel Trader Hub con link diretto</li>
+        <li>Universe ETF aggiornato a 2.253 ticker unici</li>
+      </ul>
+    </div>
+
+    <div class="changelog-item">
+      <div class="cl-header">
+        <span class="cl-version">v3.1</span>
+        <span class="cl-date">Febbraio 2026</span>
+        <span class="cl-title">RAPTOR Scanner + Settoriali + Two</span>
+      </div>
+      <ul class="cl-items">
+        <li>RAPTOR Scanner: 370 ETF, 19 indicatori tecnici, segnali BUY/SELL/WATCH</li>
+        <li>RAPTOR Settoriali: analisi rotazione settoriale con heatmap</li>
+        <li>RAPTOR Two: universo allargato 828 ETF con gestione dinamica</li>
+        <li>Ticker bar aggiornata a 44px con 2 righe (prezzi + leggenda)</li>
+        <li>Universe ETF portato a 2.100+ ticker unici</li>
+      </ul>
+    </div>
+
+    <div class="changelog-item">
+      <div class="cl-header">
+        <span class="cl-version">v3.0</span>
+        <span class="cl-date">Marzo 2025</span>
+        <span class="cl-title">RAPTOR Master Suite — Release</span>
+      </div>
+      <ul class="cl-items">
+        <li>Lancio Hub centralizzato con sidebar navigazione unificata</li>
+        <li>Ticker bar live con proxy cascade e retry automatico</li>
+        <li>Integrazione RAPTOR Geografia e Scenario Engine</li>
+        <li>13 moduli attivi al lancio</li>
+      </ul>
+    </div>
+
+    <div class="changelog-item">
+      <div class="cl-header">
+        <span class="cl-version">v2.0</span>
+        <span class="cl-date">Dicembre 2024</span>
+        <span class="cl-title">RAPTOR Leva + Wealth Meridian + STOXX 600</span>
+      </div>
+      <ul class="cl-items">
+        <li>RAPTOR Leva: 538 ETF a leva, doppia KAMA, VIX Regime</li>
+        <li>Wealth Meridian: IPS, SAA/TAA, PAC, export PDF</li>
+        <li>STOXX 600: analisi titoli europei con filtri GICS</li>
+      </ul>
+    </div>
+
+    <div class="changelog-item">
+      <div class="cl-header">
+        <span class="cl-version">v1.0</span>
+        <span class="cl-date">Ottobre 2024</span>
+        <span class="cl-title">RAPTOR Classic — Prima release</span>
+      </div>
+      <ul class="cl-items">
+        <li>Prima versione pubblica (White Edition)</li>
+        <li>Alert BUY/SELL su universo ETF base</li>
+        <li>Export Excel risultati</li>
+      </ul>
+    </div>
+
+  </div>
+
+  <div style="text-align:center;padding:20px 0;font-size:11px;color:var(--muted)">
+    RAPTOR Master Suite · giorgiogoldoni.github.io · v3.2 · Aprile 2026
+  </div>
+
+</div>
+</body>
+</html>
