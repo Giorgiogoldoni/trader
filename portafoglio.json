@@ -97,5 +97,16 @@
       "data_chiusura": "2026-07-03",
       "note": "studio accumulo — cercare livello d'ingresso più basso"
     }
+  ],
+  "watchlist": [
+    {
+      "ticker": "3WHL",
+      "yahoo": "3WHL.MI",
+      "nome": "WisdomTree Wheat 3x Daily Leveraged",
+      "carico_medio": 0.23,
+      "quantita": 100,
+      "data_ingresso": "2026-07-03",
+      "note": "studio accumulo — cercare livello d'ingresso più basso"
+    }
   ]
 }
